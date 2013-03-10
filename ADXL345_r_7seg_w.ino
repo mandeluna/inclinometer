@@ -24,7 +24,6 @@ Adafruit_7segment matrix = Adafruit_7segment();
 void setup()
 {
   Wire.begin();        // join i2c bus (address optional for master)
-  Serial.begin(9600);  // start serial for output
   
   // Activate the 7-segment i2c
   matrix.begin(0x70);
@@ -36,7 +35,6 @@ void setup()
   Wire.endTransmission();       // stop transmitting
 }
 
-long count = 0;
 int num_samples = 10;    // take the average of multiple samples
 
 void loop()
@@ -58,7 +56,8 @@ void loop()
   matrix.writeDisplay();
 }
 
-byte requestByte(char dir) {
+byte requestByte(char dir)
+{
   Wire.beginTransmission(0x1D); // transmit to ADXL345
   Wire.write(dir);
   Wire.endTransmission(); // stop transmitting
@@ -69,19 +68,22 @@ byte requestByte(char dir) {
   }
 }
 
-int getX() {
+int getX()
+{
   int val = requestByte(X0);
   val += requestByte(X1) << 8;
   return val;
 }
 
-int getY() {
+int getY()
+{
   int val = requestByte(Y0);
   val += requestByte(Y1) << 8;
   return val;
 }
 
-int getZ() {
+int getZ()
+{
   int val = requestByte(Z0);
   val += requestByte(Z1) << 8;
   return val;
